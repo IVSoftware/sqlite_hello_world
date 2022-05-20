@@ -25,6 +25,15 @@ namespace sqlite_hello_world
                 var recordset = cnx.Query<Record>($"SELECT * FROM items WHERE guid = '{guidToFind}'");
 
                 Console.WriteLine($"Found: {recordset[0].Description}");
+
+                // Change a value and update the database
+                newRecord.Description = $"{recordset[0].Description} [Edited]";
+                cnx.Update(newRecord);
+
+                // Retrieve the record a second time from the database
+                recordset = cnx.Query<Record>($"SELECT * FROM items WHERE guid = '{guidToFind}'");
+
+                Console.WriteLine($"Found: {recordset[0].Description}");
             }
 
             Console.ReadKey();
